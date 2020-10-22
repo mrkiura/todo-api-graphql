@@ -1,0 +1,6 @@
+/todo_api_env
+*__pycache__/
+*.pyc
+*.sqlite3
+*.db
+.idea/
