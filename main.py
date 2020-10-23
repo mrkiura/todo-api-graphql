@@ -1,4 +1,4 @@
-from api import app
+from api import app, db
 
 
 from ariadne import load_schema_from_path, make_executable_schema, \
