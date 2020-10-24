@@ -4,11 +4,33 @@ from .models import Todo
 
 
 def resolve_todos(obj, info):
-    todos = [todo.to_dict() for todo in Todo.query.all()]
-    return todos
+    try:
+        todos = [todo.to_dict() for todo in Todo.query.all()]
+        payload = {
+            "success": True,
+            "todos": todos
+        }
+    except Exception as error:
+        payload = {
+            "success": False,
+            "errors": [str(error)]
+        }
+    return payload
 
 
 @convert_kwargs_to_snake_case
 def resolve_todo(obj, info, todo_id):
-    todo = Todo.query.get(todo_id)
-    return todo.to_dict()
+    try:
+        todo = Todo.query.get(todo_id)
+        payload = {
+            "success": True,
+            "todo": todo.to_dict()
+        }
+
+    except AttributeError:  # todo not found
+        payload = {
+            "success": False,
+            "errors": [f"Todo matching id {todo_id} not found"]
+        }
+
+    return payload
